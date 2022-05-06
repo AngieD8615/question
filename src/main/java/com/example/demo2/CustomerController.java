@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
     private final CustomerService customerService;
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public String sayHi(@PathVariable(name = "name") String name) {
         return customerService.greeting(name);
     }

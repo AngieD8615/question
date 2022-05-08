@@ -1,10 +1,8 @@
 package com.example.demo2.question;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,13 +10,21 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionController {
 
+    private final QuestionService questionService;
+
     @GetMapping("/questions")
-    public String getQuestions() {
-        return "hello from get questions";
+    public List<QuestionEntity> getQuestions() {
+        return questionService.getQuestionsList();
     }
 
     @PostMapping("/questions")
-    public String postQuestion() {
-        return "hello from post questions";
+    @ResponseBody
+    public QuestionEntity postQuestion(@RequestBody QuestionEntity question) throws JsonProcessingException {
+        question.serializeVariables();
+
+        return questionService.postQuestion(question);
     }
+
+    @DeleteMapping("/questions")
+    public void deleteAllQuestions() { questionService.deleteAllQuestions();}
 }

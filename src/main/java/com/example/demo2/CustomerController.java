@@ -1,11 +1,12 @@
 package com.example.demo2;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("customer")
 @AllArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
@@ -15,9 +16,8 @@ public class CustomerController {
         return customerService.greeting(name);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public CustomerDto createCustomer(@RequestBody CustomerCreateDto customerCreateDto) {
-        return customerService.createCustomer(customerCreateDto);
+    @PostMapping("/name/{name}")
+    public CustomerEntity createCustomer(@PathVariable(name = "name") String name) {
+        return customerService.createCustomer(name);
     }
 }

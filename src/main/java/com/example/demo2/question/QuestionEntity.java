@@ -20,7 +20,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionEntity {
-
     @Id
     @GeneratedValue
     private UUID questionId;

@@ -53,12 +53,12 @@ public class QuestionControllerTests {
     @Test
     void postQuestion_valid_returnsQuestion() throws Exception {
         Map<String, Variable> variables = new HashMap<String, Variable>();
-        variables.put("H", new Variable(2, 10, 3));
+        variables.put("H", new Variable(2.0, 10.0, 3.0));
 
         QuestionEntity questionA = new QuestionEntity(
                 "Free Fall",
                 "A ball is dropped from a height of ${H}m. How long will it take to hit the ground?",
-                "( %{H} / 4.9 ) ^ 0.5 )",
+                "( H / 4.9 ) ^ 0.5 )",
                 "sec",
                 variables
                 );

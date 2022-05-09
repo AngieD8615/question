@@ -9,15 +9,10 @@ import java.util.List;
 @Builder
 @Setter
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Variable {
-    private int min;
-    private int max;
-    private int interval;
-
-    public Variable(int min, int max, int interval) {
-        this.min = min;
-        this.max = max;
-        this.interval = interval;
-    }
+    private Double min;
+    private Double max;
+    private Double interval;
 }

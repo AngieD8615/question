@@ -21,7 +21,10 @@ public class QuestionEntityToVariantEntity {
         });
         return newString[0];
     }
-
+    public Double calculateResult(String equation, List<variableValues> values){
+        String equationWithoutVariables = replaceVariablesWithValues(equation, values);
+        return 0.00;
+    }
 
 }
 

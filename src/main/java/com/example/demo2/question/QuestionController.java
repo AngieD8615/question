@@ -1,10 +1,10 @@
 package com.example.demo2.question;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -12,19 +12,37 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    @GetMapping("/questions")
-    public List<QuestionEntity> getQuestions() {
-        return questionService.getQuestionsList();
+    @GetMapping("/questionTemplates")
+    public List<QuestionTemplateEntity> getQuestionTemplates() {
+        return questionService.getQuestionTemplatesList();
     }
 
-    @PostMapping("/questions")
+    @PostMapping("/questionTemplates")
     @ResponseBody
-    public QuestionEntity postQuestion(@RequestBody QuestionEntity question) throws JsonProcessingException {
-        question.serializeVariables();
-
-        return questionService.postQuestion(question);
+    public QuestionTemplateEntity postQuestionTemplate(@RequestBody QuestionTemplateEntity questionTemplate) {
+        return questionService.postQuestionTemplate(questionTemplate);
     }
 
+    @DeleteMapping("/questionTemplates")
+    public void deleteAllQuestionTemplates() { questionService.deleteAllQuestionTemplates();}
+
+    //TODO
+    @DeleteMapping("/questionTemplates/{id}")
+    public void deleteSingleQuestionTemplateAndCorrespondingQuestions(
+            @PathVariable(name = "id") UUID questionTemplateId
+    ){}
+
+    //TODO
+    @GetMapping("/questions")
+    public List<FinalQuestionEntity> getFinalQuestions() {
+        return null;
+    }
+
+
+
+    //TODO
     @DeleteMapping("/questions")
-    public void deleteAllQuestions() { questionService.deleteAllQuestions();}
+    public void deleteAllQuestions() {}
+
+
 }

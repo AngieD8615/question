@@ -22,14 +22,7 @@ public class QuestionVariantEntity {
     @Id
     @GeneratedValue
     private UUID questionVariantId;
-    private UUID questionID;
-    private String valuesJSON;
-    @Transient
-    private Map<String, Double> variableValues = new HashMap<String, Double>();
-    private Double result;
-
-    public void serializeValues() throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        this.valuesJSON = mapper.writeValueAsString(variableValues);
-    }
+    private UUID questionTemplateId;
+    private String variableName;
+    private Double variableValue;
 }

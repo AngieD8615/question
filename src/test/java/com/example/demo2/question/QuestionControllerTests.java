@@ -9,9 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,46 +30,40 @@ public class QuestionControllerTests {
     ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    void getAllQuestionsList() throws Exception {
-        List<QuestionEntity> questions = new ArrayList<>();
-        QuestionEntity questionA = new QuestionEntity();
+    void getAllQuestionTemplatesList() throws Exception {
+        List<QuestionTemplateEntity> questions = new ArrayList<>();
+        QuestionTemplateEntity questionA = new QuestionTemplateEntity();
         questionA.setTopic("1-D Motion");
 
-        QuestionEntity questionB = new QuestionEntity();
+        QuestionTemplateEntity questionB = new QuestionTemplateEntity();
         questionB.setTopic("Free Fall");
 
         questions.add(questionA);
         questions.add(questionB);
 
-        when(questionService.getQuestionsList()).thenReturn(questions);
+        when(questionService.getQuestionTemplatesList()).thenReturn(questions);
 
-        mockMvc.perform(get("/questions"))
+        mockMvc.perform(get("/questionTemplates"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
 
     @Test
-    void postQuestion_valid_returnsQuestion() throws Exception {
-        Map<String, Variable> variables = new HashMap<String, Variable>();
-        variables.put("H", new Variable(2.0, 10.0, 3.0));
+    void postQuestionTemplate_valid_returnsQuestionTemplate() throws Exception {
 
-        QuestionEntity questionA = new QuestionEntity(
+        QuestionTemplateEntity questionA = new QuestionTemplateEntity(
                 "Free Fall",
                 "A ball is dropped from a height of ${H}m. How long will it take to hit the ground?",
                 "( H / 4.9 ) ^ 0.5 )",
-                "sec",
-                variables
+                "sec"
                 );
-        questionA.serializeVariables();
 
-        when(questionService.postQuestion(any(QuestionEntity.class))).thenReturn(questionA);
+        when(questionService.postQuestionTemplate(any(QuestionTemplateEntity.class))).thenReturn(questionA);
 
-        mockMvc.perform(post("/questions").contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(questionA)))
+        mockMvc.perform(post("/questionTemplates").contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(questionA)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.topic", hasToString(questionA.getTopic())))
-                .andExpect(jsonPath("$.variablesJSON", hasToString(questionA.getVariablesJSON())));
-
+                .andExpect(jsonPath("$.topic", hasToString(questionA.getTopic())));
     }
 }

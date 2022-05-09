@@ -22,10 +22,12 @@ class QuestionServiceTest {
 
     @Mock
     QuestionRepository questionRepository;
+    @Mock
+    QuestionVariantRepository questionVariantRepository;
 
     @BeforeEach
     void setUp() {
-        questionService = new QuestionService(questionRepository);
+        questionService = new QuestionService(questionRepository, questionVariantRepository);
     }
 
     @Test

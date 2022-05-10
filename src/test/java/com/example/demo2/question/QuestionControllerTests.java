@@ -44,7 +44,7 @@ public class QuestionControllerTests {
 
         when(questionService.getQuestionTemplatesList()).thenReturn(questions);
 
-        mockMvc.perform(get("/questionTemplates"))
+        mockMvc.perform(get("/questionBank/questionTemplates"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
@@ -62,7 +62,7 @@ public class QuestionControllerTests {
 
         when(questionService.postQuestionTemplate(any(QuestionTemplateEntity.class))).thenReturn(questionA);
 
-        mockMvc.perform(post("/questionTemplates").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/questionBank/questionTemplates").contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(questionA)))
                 .andDo(print())
                 .andExpect(status().isOk())

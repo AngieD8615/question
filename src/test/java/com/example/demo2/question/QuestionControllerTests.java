@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -52,6 +53,7 @@ public class QuestionControllerTests {
     void postQuestionTemplate_valid_returnsQuestionTemplate() throws Exception {
 
         QuestionTemplateEntity questionA = new QuestionTemplateEntity(
+                UUID.randomUUID(),
                 "Free Fall",
                 "A ball is dropped from a height of ${H}m. How long will it take to hit the ground?",
                 "( H / 4.9 ) ^ 0.5 )",

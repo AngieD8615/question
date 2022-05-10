@@ -19,13 +19,13 @@ class QuestionServiceTest {
     QuestionService questionService;
 
     @Mock
-    QuestionRepository questionRepository;
+    QuestionTemplateRepository questionTemplateRepository;
     @Mock
     FinalQuestionRepository questionVariantRepository;
 
     @BeforeEach
     void setUp() {
-        questionService = new QuestionService(questionRepository, questionVariantRepository);
+        questionService = new QuestionService(questionTemplateRepository, questionVariantRepository);
     }
 
     @Test

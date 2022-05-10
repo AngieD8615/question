@@ -17,19 +17,12 @@ import java.util.UUID;
 public class QuestionTemplateEntity {
     @Id
     @GeneratedValue
-    private UUID questionTemplateId;
+    private UUID questionTemplateUuid;
     private String topic;
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String baseQuestion;
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String solutionEquation;
     private String solutionUnit;
-
-    public QuestionTemplateEntity(String topic, String baseQuestion, String solutionEquation, String solutionUnit) {
-        this.topic = topic;
-        this.baseQuestion = baseQuestion;
-        this.solutionEquation = solutionEquation;
-        this.solutionUnit = solutionUnit;
-    }
-
-
 
 }

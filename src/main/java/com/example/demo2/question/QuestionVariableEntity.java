@@ -10,20 +10,20 @@ import java.util.UUID;
 @Setter
 @Getter
 @Entity
-@Table(name = "final_questions")
+@Table(name = "question_variables")
 @AllArgsConstructor
 @NoArgsConstructor
-public class FinalQuestionEntity {
+public class QuestionVariableEntity {
+
     @Id
     @GeneratedValue
-    private UUID finalQuestionUuid;
+    private UUID questionVariableUuid;
 
     @ManyToOne
     @JoinColumn(name="question_template_uuid", nullable = false)
     private QuestionTemplateEntity questionTemplate;
-
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String finalQuestion;
     @Column(nullable = false)
-    private double result;
+    private String variableName;
+    @Column(nullable = false)
+    private double variableValue;
 }

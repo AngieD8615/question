@@ -4,22 +4,28 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class QuestionService {
-    private final QuestionRepository questionRepository;
-    private final FinalQuestionRepository questionVariantRepository;
+    private final QuestionTemplateRepository questionTemplateRepository;
+    private final FinalQuestionRepository finalQuestionRepository;
 
     public List<QuestionTemplateEntity> getQuestionTemplatesList() {
-        return questionRepository.findAll();
+        return questionTemplateRepository.findAll();
     }
 
     public QuestionTemplateEntity postQuestionTemplate(QuestionTemplateEntity question) {
-        return questionRepository.save(question);
+        return questionTemplateRepository.save(question);
     }
 
     public void deleteAllQuestionTemplates() {
-        questionRepository.deleteAll();
+        questionTemplateRepository.deleteAll();
+    }
+
+    //TODO
+    public List<FinalQuestionEntity> postFinalQuestions(UUID questionTemplateId, QuestionTemplateEntity questionTemplate) {
+        return null;
     }
 }

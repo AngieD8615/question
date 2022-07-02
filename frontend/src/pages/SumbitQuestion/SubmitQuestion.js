@@ -16,12 +16,18 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+const questionStatuses = {
+    prepQuestion: "prepQuestion",
+    submitted: "submitted",
+    submissionFailed: "submissionFailed",
+}
 
 export default function SubmitQuestion({axios, units, topics, topicStatus}) {
     const [questionUnit, setQuestionUnit] = useState('')
     const [topicList, setTopicList] = useState([])
     const [question, setQuestion] = useState('')
     const [solutionUnit, setSolutionUnit] = useState('')
+    const [status, setStatus] = useState(questionStatuses.prepQuestion)
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -46,6 +52,48 @@ export default function SubmitQuestion({axios, units, topics, topicStatus}) {
                 }
                 break;
             default:
+        }
+    }
+
+    const renderForm = () => {
+        if (status === questionStatuses.prepQuestion) {
+            return (
+                <div className="form-container">
+                    <div className="unit-options-container">
+                        {renderUnitRadioOptions()}
+                    </div>
+                    <div className="submit-question-text-field full-size">
+                        <TextField
+                            fullWidth
+                            label="Question"
+                            name="baseQuestion"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="submit-question-text-field small-size">
+                        <TextField
+                            label="Solution Units"
+                            name="solutionUnit"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="submit-button small-size">
+                        <Button variant="contained" onClick={onSubmit}>Submit</Button>
+                    </div>
+                </div>
+            )
+        }
+        if (status === questionStatuses.submitted) {
+            return (
+                <div>
+                    Question submitted successfully. Your question will be available upon approval.
+                </div>
+            )
+        }
+        if (status === questionStatuses.submissionFailed) {
+            return (
+                <div>Sorry, your submission failed</div>
+            )
         }
     }
 
@@ -107,13 +155,18 @@ export default function SubmitQuestion({axios, units, topics, topicStatus}) {
             unitEnum: questionUnit,
             topicEntityList: topicList,
             baseQuestion: question,
-            solutionEquation: "1 + 2",
-            solutionUnit: solutionUnit,
-            variables: [],
+            solutionUnit: solutionUnit
         }
+        console.log(reqBody)
         axios.post(`${serverURL}/questionTemplates`, reqBody)
             .then(res => console.log(res))
-            .catch(err => console.log(err))
+            .then(() => {
+                setStatus(questionStatuses.submitted)
+            })
+            .catch(err => {
+                setStatus(questionStatuses.submissionFailed)
+                console.log(err)
+            })
     }
 
     return (
@@ -121,29 +174,7 @@ export default function SubmitQuestion({axios, units, topics, topicStatus}) {
             <div>
                 <h2>Ask a Question to Your Peers</h2>
             </div>
-            <div className="form-container">
-                <div className="unit-options-container">
-                    {renderUnitRadioOptions()}
-                </div>
-                <div className="submit-question-text-field full-size">
-                    <TextField
-                        fullWidth
-                        label="Question"
-                        name="baseQuestion"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="submit-question-text-field small-size">
-                    <TextField
-                        label="Solution Units"
-                        name="solutionUnit"
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="submit-button small-size">
-                    <Button variant="contained" onClick={onSubmit}>Submit</Button>
-                </div>
-            </div>
+            {renderForm()}
         </div>
     )
 

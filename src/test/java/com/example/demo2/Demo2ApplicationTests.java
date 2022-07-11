@@ -12,12 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {"DB_USERNAME = postgres", "DB_PASSWORD = postgres"})
 class Demo2ApplicationTests {
 
-	@Autowired
-	private QuestionService questionService;
-
-	@Test
-	void contextLoads() {
-		assertThat(questionService).isNotNull();
-	}
+//	@Autowired
+//	private QuestionService questionService;
+//
+//	@Test
+//	void contextLoads() {
+//		assertThat(questionService).isNotNull();
+//	}
 
 }
